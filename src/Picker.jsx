@@ -36,12 +36,12 @@ class Picker extends Component {
       split: splitPanel
     });
     const props = blacklist(this.props, 'className', 'splitPanel', 'isOpen');    
-
+    
     return (
       <div className={className} style={{display: isOpen ? 'block' : 'none'}} onClick={(evt) => evt.stopPropagation()}>
         {shortcuts
           ? <Shortcuts {...props} />
-          : undefined
+          : null
         }
 
         {splitPanel
@@ -55,7 +55,6 @@ class Picker extends Component {
           </div>
           : undefined
         }
-        
         {showCalendarPicker
           ? <Calendar {...props} isOpen={isOpen} style={{display: isCalendarPanel || !splitPanel ? 'block' : 'none'}} />
           : undefined

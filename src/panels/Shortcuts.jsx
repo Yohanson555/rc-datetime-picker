@@ -54,15 +54,30 @@ class Shortcuts extends Component {
       } 
       : shortcuts;
 
-    return Object.keys(renderShortcuts).map((key) => {
-      return this._renderShortcut(key, renderShortcuts[key]);
-    });
+    return (<div className="shortcuts-bar-btns">
+      {
+        Object.keys(renderShortcuts).map((key) => {
+          return this._renderShortcut(key, renderShortcuts[key]);
+        })
+      }
+    </div>);
+  }
+
+  _renderLabel = () => {
+    const { label } = this.props;
+
+    if (label && typeof label === 'string') {
+      return (<div className="shortcuts-bar-label">{label}</div>);
+    }
+
+    return null;
   }
 
   render() {
     
     return (
       <div className="shortcuts-bar">
+        {this._renderLabel()}
         {this._renderShortcuts()}
       </div>
     );

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import moment from 'moment';
 
-import {DatetimePicker, DatetimePickerTrigger} from '../dist/rc-datetime-picker';
+import {DatetimePicker, DatetimePickerTrigger} from '../src/';
 import './app.less';
 
 
@@ -21,13 +21,19 @@ class InlinePicker extends Component {
   }
 
   render() {
-    const {moment} = this.state;
+    const {moment: datetime} = this.state;
+
+    const shortcuts = {
+      'Today': moment(),
+      'Yesterday': moment().subtract(1, 'days'),
+    };
 
     return (
       <div>
-        <span className="text">Datetime: {moment.format('YYYY/MM/DD HH:mm')}</span>
         <DatetimePicker
-          moment={moment}
+          label={'From:'}
+          shortcuts={shortcuts}
+          moment={datetime}
           onChange={this.handleChange}
         />
       </div>

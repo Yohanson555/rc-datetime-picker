@@ -49,6 +49,8 @@ class Range extends Component {
   render() {
     const {moment} = this.state;
     const {
+      fromLabel,
+      toLabel,
       format, 
       showTimePicker = false, 
       isOpen = true,
@@ -89,6 +91,7 @@ class Range extends Component {
               <tr>
                 <td>
                   <DatetimePicker
+                    label={fromLabel}
                     {...props}
                     isOpen={isOpen}
                     className="range-start-picker"
@@ -101,6 +104,7 @@ class Range extends Component {
                 </td>
                 <td>
                   <DatetimePicker
+                    label={toLabel}
                     {...props}
                     isOpen={isOpen}
                     className="range-end-picker"

@@ -127,7 +127,7 @@ class Month extends Component {
           <button type="button" className="prev-month" onClick={this.changeYear.bind(this, 'prev')}>
             <i className="fa fa-angle-left"/>
           </button>
-          <span className="current-date" onClick={changePanel.bind(this, 'year', _moment)}>{_moment.format('YYYY')}</span>
+          <span className="current-date" onClick={changePanel.bind(this, 'year', _moment)}>!!{_moment.format('YYYY')}</span>
           <button type="button" className="next-month" onClick={this.changeYear.bind(this, 'next')}>
             <i className="fa fa-angle-right"/>
           </button>

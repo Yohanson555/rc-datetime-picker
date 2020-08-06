@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactSlider from 'react-slider';
+import InputNumber from 'rc-input-number';
 import moment from 'moment';
-
 
 class Time extends Component {
   constructor(props) {
@@ -53,9 +53,9 @@ class Time extends Component {
     onChange && onChange(selected);
   }
 
-  render() {
+  renderRangePicker() {
     const _moment = this.state.moment;
-    const {style} = this.props;
+    const { style } = this.props;
 
     return (
       <div style={style}>
@@ -74,6 +74,46 @@ class Time extends Component {
         </div>
       </div>
     );
+  }
+
+  renderInputPicker() {
+    const _moment = this.state.moment;
+    const { style } = this.props;
+
+
+    return (
+      <div style={style}>
+        <div className="time">
+          <InputNumber 
+            min={0}
+            max={23}
+            value={_moment.hour()}
+            onChange={this.handleChange.bind(this, 'hours')}
+            formatter={(val) => val < 10 ? `0${val}` : `${val}`}
+          />
+          :
+          <InputNumber 
+            
+            min={0}
+            max={59}
+            value={_moment.minute()}
+            onChange={this.handleChange.bind(this, 'minutes')}
+            formatter={(val) => val < 10 ? `0${val}` : `${val}`}
+          />
+
+        </div>
+      </div>
+    );
+  }
+
+  render() {
+    const { type } = this.props;
+
+    switch (type) {
+    case 'range': return this.renderRangePicker();
+    default: return this.renderInputPicker();
+    }
+    
   }
 }
 
