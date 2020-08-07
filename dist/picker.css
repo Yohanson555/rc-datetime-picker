@@ -66,7 +66,6 @@
   flex-wrap: wrap;
 }
 .datetime-picker .calendar table thead th {
-  color: #FF9A19;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -88,7 +87,7 @@
   align-items: center;
   justify-content: center;
   height: 32px;
-  border-radius: 4px;
+  border-radius: 50px;
   cursor: pointer;
 }
 .datetime-picker .calendar table tbody tr td:hover {
@@ -153,7 +152,11 @@
   padding: 4px;
   display: flex;
   align-items: center;
+  justify-content: center;
   position: relative;
+}
+.datetime-picker .time .rc-input-number {
+  margin: 0 4px;
 }
 .datetime-picker .time .show-time {
   display: flex;
@@ -209,25 +212,37 @@
   border-color: #5cc4ef;
 }
 .datetime-picker .shortcuts-bar {
-  border-bottom: 1px solid #efefef;
   padding: 8px;
+  position: relative;
+  font-size: 90%;
 }
-.datetime-picker .shortcuts-bar .btn {
+.datetime-picker .shortcuts-bar .shortcuts-bar-label {
+  float: left;
+  color: #aeaeae;
+}
+.datetime-picker .shortcuts-bar .shortcuts-bar-btns {
+  float: right;
+}
+.datetime-picker .shortcuts-bar .shortcuts-bar-btns .btn {
+  font-size: 90%;
   border: 0;
   background: none;
   cursor: pointer;
   border-radius: 2px;
   padding: 2px 4px;
   outline: none;
+  color: #025fb9;
 }
-.datetime-picker .shortcuts-bar .btn:hover {
-  background-color: #f0f0f0;
+.datetime-picker .shortcuts-bar .shortcuts-bar-btns .btn:hover {
+  color: inherit;
 }
-.datetime-picker .shortcuts-bar .btn:last-child {
-  float: right;
-}
-.datetime-picker .shortcuts-bar .btn:not(:first-child) {
+.datetime-picker .shortcuts-bar .shortcuts-bar-btns .btn:not(:first-child) {
   margin-left: 5px;
+}
+.datetime-picker .shortcuts-bar:after {
+  content: ' ';
+  display: block;
+  clear: both;
 }
 .datetime-range-picker {
   border: 1px solid #dbdbdb;
@@ -268,4 +283,111 @@
   left: 10px;
   top: -6px;
   transform: rotate(315deg);
+}
+.rc-input-number {
+  margin: 0;
+  padding: 0;
+  line-height: 26px;
+  font-size: 12px;
+  height: 26px;
+  display: inline-block;
+  vertical-align: middle;
+  border: 1px solid #D9D9D9;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+.rc-input-number-focused {
+  border-color: #1890ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+.rc-input-number-handler {
+  text-align: center;
+  line-height: 12px;
+  height: 12px;
+  overflow: hidden;
+  display: block;
+  touch-action: none;
+}
+.rc-input-number-handler-active {
+  background: #ddd;
+}
+.rc-input-number-handler-up-inner,
+.rc-input-number-handler-down-inner {
+  color: #666666;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.rc-input-number:hover {
+  border-color: #1890ff;
+}
+.rc-input-number:hover .rc-input-number-handler-up,
+.rc-input-number:hover .rc-input-number-handler-wrap {
+  border-color: #1890ff;
+}
+.rc-input-number-disabled:hover {
+  border-color: #d9d9d9;
+}
+.rc-input-number-disabled:hover .rc-input-number-handler-up,
+.rc-input-number-disabled:hover .rc-input-number-handler-wrap {
+  border-color: #d9d9d9;
+}
+.rc-input-number-input-wrap {
+  overflow: hidden;
+  height: 100%;
+}
+.rc-input-number-input {
+  width: 100%;
+  text-align: center;
+  outline: 0;
+  -moz-appearance: textfield;
+  line-height: 26px;
+  height: 100%;
+  transition: all 0.3s ease;
+  color: #666666;
+  border: 0;
+  border-radius: 4px;
+  padding: 0;
+  transition: all 0.3s;
+}
+.rc-input-number-handler-wrap {
+  float: right;
+  border-left: 1px solid #D9D9D9;
+  width: 20px;
+  height: 100%;
+  transition: all 0.3s;
+}
+.rc-input-number-handler-up {
+  border-bottom: 1px solid #D9D9D9;
+  padding-top: 1px;
+  transition: all 0.3s;
+}
+.rc-input-number-handler-up-inner:after {
+  content: '+';
+}
+.rc-input-number-handler-down {
+  transition: all 0.3s;
+}
+.rc-input-number-handler-down-inner:after {
+  content: '-';
+}
+.rc-input-number-handler-down-disabled,
+.rc-input-number-handler-up-disabled {
+  opacity: 0.72;
+}
+.rc-input-number-handler-down-disabled:hover,
+.rc-input-number-handler-up-disabled:hover {
+  color: #999;
+  border-color: #d9d9d9;
+}
+.rc-input-number-disabled .rc-input-number-input {
+  opacity: 0.72;
+  cursor: not-allowed;
+  background-color: #f3f3f3;
+}
+.rc-input-number-disabled .rc-input-number-handler {
+  opacity: 0.72;
+}
+.rc-input-number-disabled .rc-input-number-handler:hover {
+  color: #999;
+  border-color: #d9d9d9;
 }

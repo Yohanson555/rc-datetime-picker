@@ -1,21 +1,22 @@
 /*
- * rc-datetime-picker v1.6.1
+ * rc-datetime-picker v1.7.0
  * https://github.com/AllenWooooo/rc-datetime-picker
  *
- * (c) 2018 Allen Wu
+ * (c) 2020 Allen Wu
  * License: MIT
  */
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('classnames/bind'), require('blacklist'), require('moment'), require('react-slider'), require('react-dom')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'react', 'classnames/bind', 'blacklist', 'moment', 'react-slider', 'react-dom'], factory) :
-	(factory((global['rc-datetime-picker'] = {}),global.React,global.classNames,global.blacklist,global.moment,global.ReactSlider,global.ReactDOM));
-}(this, (function (exports,React,classNames,blacklist,moment,ReactSlider,ReactDOM) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('classnames/bind'), require('blacklist'), require('moment'), require('react-slider'), require('rc-input-number'), require('react-dom')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'react', 'classnames/bind', 'blacklist', 'moment', 'react-slider', 'rc-input-number', 'react-dom'], factory) :
+	(factory((global['rc-datetime-picker'] = {}),global.React,global.classNames,global.blacklist,global.moment,global.ReactSlider,global.InputNumber,global.ReactDOM));
+}(this, (function (exports,React,classNames,blacklist,moment,ReactSlider,InputNumber,ReactDOM) { 'use strict';
 
 var React__default = 'default' in React ? React['default'] : React;
 classNames = classNames && classNames.hasOwnProperty('default') ? classNames['default'] : classNames;
 blacklist = blacklist && blacklist.hasOwnProperty('default') ? blacklist['default'] : blacklist;
 moment = moment && moment.hasOwnProperty('default') ? moment['default'] : moment;
 ReactSlider = ReactSlider && ReactSlider.hasOwnProperty('default') ? ReactSlider['default'] : ReactSlider;
+InputNumber = InputNumber && InputNumber.hasOwnProperty('default') ? InputNumber['default'] : InputNumber;
 var ReactDOM__default = 'default' in ReactDOM ? ReactDOM['default'] : ReactDOM;
 
 var WEEKS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -476,6 +477,7 @@ var Month = function (_Component) {
           React__default.createElement(
             'span',
             { className: 'current-date', onClick: changePanel.bind(this, 'year', _moment) },
+            '!!',
             _moment.format('YYYY')
           ),
           React__default.createElement(
@@ -851,8 +853,8 @@ var Time = function (_Component) {
       });
     }
   }, {
-    key: 'render',
-    value: function render() {
+    key: 'renderRangePicker',
+    value: function renderRangePicker() {
       var _moment = this.state.moment;
       var style = this.props.style;
 
@@ -900,6 +902,55 @@ var Time = function (_Component) {
           )
         )
       );
+    }
+  }, {
+    key: 'renderInputPicker',
+    value: function renderInputPicker() {
+      var _moment = this.state.moment;
+      var style = this.props.style;
+
+
+      return React__default.createElement(
+        'div',
+        { style: style },
+        React__default.createElement(
+          'div',
+          { className: 'time' },
+          React__default.createElement(InputNumber, {
+            min: 0,
+            max: 23,
+            value: _moment.hour(),
+            onChange: this.handleChange.bind(this, 'hours'),
+            formatter: function formatter(val) {
+              return val < 10 ? '0' + val : '' + val;
+            }
+          }),
+          ':',
+          React__default.createElement(InputNumber, {
+
+            min: 0,
+            max: 59,
+            value: _moment.minute(),
+            onChange: this.handleChange.bind(this, 'minutes'),
+            formatter: function formatter(val) {
+              return val < 10 ? '0' + val : '' + val;
+            }
+          })
+        )
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var type = this.props.type;
+
+
+      switch (type) {
+        case 'range':
+          return this.renderRangePicker();
+        default:
+          return this.renderInputPicker();
+      }
     }
   }]);
   return Time;
@@ -1018,9 +1069,26 @@ var Shortcuts = function (_Component) {
         }
       }) : shortcuts;
 
-      return Object.keys(renderShortcuts).map(function (key) {
-        return _this._renderShortcut(key, renderShortcuts[key]);
-      });
+      return React__default.createElement(
+        'div',
+        { className: 'shortcuts-bar-btns' },
+        Object.keys(renderShortcuts).map(function (key) {
+          return _this._renderShortcut(key, renderShortcuts[key]);
+        })
+      );
+    }, _this._renderLabel = function () {
+      var label = _this.props.label;
+
+
+      if (label && typeof label === 'string') {
+        return React__default.createElement(
+          'div',
+          { className: 'shortcuts-bar-label' },
+          label
+        );
+      }
+
+      return null;
     }, _temp), possibleConstructorReturn(_this, _ret);
   }
 
@@ -1031,6 +1099,7 @@ var Shortcuts = function (_Component) {
       return React__default.createElement(
         'div',
         { className: 'shortcuts-bar' },
+        this._renderLabel(),
         this._renderShortcuts()
       );
     }
@@ -1084,7 +1153,7 @@ var Picker = function (_Component) {
         { className: className, style: { display: isOpen ? 'block' : 'none' }, onClick: function onClick(evt) {
             return evt.stopPropagation();
           } },
-        shortcuts ? React__default.createElement(Shortcuts, props) : undefined,
+        shortcuts ? React__default.createElement(Shortcuts, props) : null,
         splitPanel ? React__default.createElement(
           'div',
           { className: 'panel-nav' },
@@ -1162,6 +1231,8 @@ var Range = function (_Component) {
     value: function render() {
       var moment$$1 = this.state.moment;
       var _props = this.props,
+          fromLabel = _props.fromLabel,
+          toLabel = _props.toLabel,
           format = _props.format,
           _props$showTimePicker = _props.showTimePicker,
           showTimePicker = _props$showTimePicker === undefined ? false : _props$showTimePicker,
@@ -1243,7 +1314,9 @@ var Range = function (_Component) {
                 React__default.createElement(
                   'td',
                   null,
-                  React__default.createElement(Picker, _extends({}, props, {
+                  React__default.createElement(Picker, _extends({
+                    label: fromLabel
+                  }, props, {
                     isOpen: isOpen,
                     className: 'range-start-picker',
                     showTimePicker: showTimePicker,
@@ -1256,7 +1329,9 @@ var Range = function (_Component) {
                 React__default.createElement(
                   'td',
                   null,
-                  React__default.createElement(Picker, _extends({}, props, {
+                  React__default.createElement(Picker, _extends({
+                    label: toLabel
+                  }, props, {
                     isOpen: isOpen,
                     className: 'range-end-picker',
                     showTimePicker: showTimePicker,
