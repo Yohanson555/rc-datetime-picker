@@ -1,5 +1,5 @@
 /*
- * rc-datetime-picker v1.8.0
+ * rc-datetime-picker v1.8.1
  * https://github.com/AllenWooooo/rc-datetime-picker
  *
  * (c) 2020 Allen Wu
@@ -1245,7 +1245,7 @@ var Range = function (_Component) {
 
       return React__default.createElement(
         'div',
-        { className: className, style: { display: isOpen ? 'block' : 'none' } },
+        { className: className, style: !isOpen ? { display: 'none' } : {} },
         React__default.createElement(
           'div',
           { className: 'datetime-range-picker-panel' },

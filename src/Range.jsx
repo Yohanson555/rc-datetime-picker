@@ -51,7 +51,7 @@ class Range extends Component {
     const props = blacklist(this.props, 'className', 'isOpen', 'format', 'moment', 'showTimePicker', 'shortcuts', 'onChange');
 
     return (
-      <div className={className} style={{display: isOpen ? 'block' : 'none'}}>
+      <div className={className} style={!isOpen ? {display: 'none'} : {}}>
         <div className="datetime-range-picker-panel">
           <div className="datetime-range-picker-item">
             <DatetimePicker
