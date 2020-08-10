@@ -298,11 +298,18 @@
 }
 
 .datetime-range-picker {
-  border: 1px solid #dbdbdb;
-  background-color: #fff;
-  border-radius: 4px;
-  box-sizing: content-box;
-  z-index: 100;
+  position: relative;
+  display: inline-block;
+}
+
+.datetime-range-picker-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+}
+
+.datetime-range-picker-item {
+  display: inline-block;
 }
 
 .datetime-trigger {

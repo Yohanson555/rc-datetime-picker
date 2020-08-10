@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import moment from 'moment';
 
-import {DatetimePicker, DatetimePickerTrigger} from '../src/';
+import {DatetimePicker, DatetimePickerTrigger, DatetimeRangePicker} from '../src/';
 import './app.less';
 
 
@@ -77,6 +77,39 @@ class PopupPicker extends Component {
   }
 }
 
+class RangePicker extends Component {
+  constructor() {
+    super();
+    this.state = {
+      datetime: moment()
+    };
+  }
+
+  handleChange = (moment) => {
+    this.setState({
+      datetime: moment
+    });
+  }
+
+  render() {
+    const shortcuts = {
+      'Today': moment()
+    };
+    const { datetime } = this.state;
+
+    return (
+      <DatetimeRangePicker 
+        fromLabel='From:'
+        toLabel='To:'
+        shortcuts={shortcuts}
+        moment={datetime} 
+        onChange={this.handleChange} 
+        showTimePicker={true}
+      />
+    );
+  }
+}
+
 render(
   <InlinePicker />,
   document.getElementById('inline-picker')
@@ -85,5 +118,10 @@ render(
 render(
   <PopupPicker />,
   document.getElementById('popup-picker')
+);
+
+render(
+  <RangePicker />,
+  document.getElementById('range-picker')
 );
 

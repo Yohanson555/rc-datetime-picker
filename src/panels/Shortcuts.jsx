@@ -9,10 +9,16 @@ const isSameRange = (current, value) => {
 
 class Shortcuts extends Component {
   handleClick = (value, isCustom) => {
-    const {onChange, range} = this.props;
+    const {onChange, range, moment, rangeAt} = this.props;
+    
+
 
     if (range) {
-      onChange && onChange(value, isCustom);
+      let _value = { ...moment };
+      
+      _value[rangeAt] = value;
+
+      onChange && onChange(_value, isCustom);
     } else {
       onChange && onChange(value, 'day');
     }
