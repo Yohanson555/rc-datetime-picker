@@ -1,5 +1,5 @@
 /*
- * rc-datetime-picker v1.7.0
+ * rc-datetime-picker v1.8.0
  * https://github.com/AllenWooooo/rc-datetime-picker
  *
  * (c) 2020 Allen Wu
@@ -22,7 +22,7 @@ var ReactDOM__default = 'default' in ReactDOM ? ReactDOM['default'] : ReactDOM;
 var WEEKS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 var DAY_FORMAT = 'MMMM, YYYY';
-var CONFIRM_BUTTON_TEXT = 'Confirm';
+
 var START_DATE_TEXT = 'Start Date:';
 var END_DATE_TEXT = 'End Date:';
 var CUSTOM_BUTTON_TEXT = 'Custom';
@@ -1023,11 +1023,17 @@ var Shortcuts = function (_Component) {
     return _ret = (_temp = (_this = possibleConstructorReturn(this, (_ref = Shortcuts.__proto__ || Object.getPrototypeOf(Shortcuts)).call.apply(_ref, [this].concat(args))), _this), _this.handleClick = function (value, isCustom) {
       var _this$props = _this.props,
           onChange = _this$props.onChange,
-          range = _this$props.range;
+          range = _this$props.range,
+          moment$$1 = _this$props.moment,
+          rangeAt = _this$props.rangeAt;
 
 
       if (range) {
-        onChange && onChange(value, isCustom);
+        var _value = _extends({}, moment$$1);
+
+        _value[rangeAt] = value;
+
+        onChange && onChange(_value, isCustom);
       } else {
         onChange && onChange(value, 'day');
       }
@@ -1186,36 +1192,11 @@ var Range = function (_Component) {
 
     var _this = possibleConstructorReturn(this, (Range.__proto__ || Object.getPrototypeOf(Range)).call(this, props));
 
-    _this.handleChange = function (moment$$1) {
-      _this.setState({
-        moment: moment$$1
-      });
-    };
-
-    _this.handleShortcutChange = function (moment$$1, isCustom) {
-      var onChange = _this.props.onChange;
-
-
-      if (isCustom) {
-        _this.setState({
-          moment: moment$$1
-        });
-      } else {
-        onChange && onChange(moment$$1);
-      }
-    };
-
-    _this.onConfirm = function () {
-      var moment$$1 = _this.state.moment;
-      var onChange = _this.props.onChange;
-
-
-      onChange && onChange(moment$$1);
-    };
-
     _this.state = {
       moment: props.moment
     };
+
+    _this.handleChange = _this.handleChange.bind(_this);
     return _this;
   }
 
@@ -1225,6 +1206,20 @@ var Range = function (_Component) {
       this.setState({
         moment: props.moment
       });
+    }
+  }, {
+    key: 'handleChange',
+    value: function handleChange(moment$$1) {
+      var onChange = this.props.onChange;
+
+
+      this.setState({
+        moment: moment$$1
+      });
+
+      if (onChange && typeof onChange === 'function') {
+        onChange(moment$$1);
+      }
     }
   }, {
     key: 'render',
@@ -1239,8 +1234,6 @@ var Range = function (_Component) {
           _props$isOpen = _props.isOpen,
           isOpen = _props$isOpen === undefined ? true : _props$isOpen,
           shortcuts = _props.shortcuts,
-          _props$confirmButtonT = _props.confirmButtonText,
-          confirmButtonText = _props$confirmButtonT === undefined ? CONFIRM_BUTTON_TEXT : _props$confirmButtonT,
           _props$startDateText = _props.startDateText,
           startDateText = _props$startDateText === undefined ? START_DATE_TEXT : _props$startDateText,
           _props$endDateText = _props.endDateText,
@@ -1255,94 +1248,42 @@ var Range = function (_Component) {
         { className: className, style: { display: isOpen ? 'block' : 'none' } },
         React__default.createElement(
           'div',
-          { className: 'tools-bar' },
-          shortcuts ? React__default.createElement(Shortcuts, _extends({}, props, { moment: moment$$1 || {}, range: true, shortcuts: shortcuts, onChange: this.handleShortcutChange })) : undefined,
-          React__default.createElement(
-            'div',
-            { className: 'buttons' },
-            React__default.createElement(
-              'button',
-              { type: 'button', className: 'btn', onClick: this.onConfirm },
-              confirmButtonText
-            )
-          )
-        ),
-        React__default.createElement(
-          'div',
           { className: 'datetime-range-picker-panel' },
           React__default.createElement(
-            'table',
-            null,
-            React__default.createElement(
-              'tbody',
-              null,
-              React__default.createElement(
-                'tr',
-                null,
-                React__default.createElement(
-                  'td',
-                  { className: 'datetime-text' },
-                  React__default.createElement(
-                    'span',
-                    { className: 'text-label' },
-                    startDateText
-                  ),
-                  React__default.createElement(
-                    'span',
-                    { className: 'text-value' },
-                    moment$$1 && moment$$1.start ? moment$$1.start.format(formatStyle) : undefined
-                  )
-                ),
-                React__default.createElement(
-                  'td',
-                  { className: 'datetime-text' },
-                  React__default.createElement(
-                    'span',
-                    { className: 'text-label' },
-                    endDateText
-                  ),
-                  React__default.createElement(
-                    'span',
-                    { className: 'text-value' },
-                    moment$$1 && moment$$1.end ? moment$$1.end.format(formatStyle) : undefined
-                  )
-                )
-              ),
-              React__default.createElement(
-                'tr',
-                null,
-                React__default.createElement(
-                  'td',
-                  null,
-                  React__default.createElement(Picker, _extends({
-                    label: fromLabel
-                  }, props, {
-                    isOpen: isOpen,
-                    className: 'range-start-picker',
-                    showTimePicker: showTimePicker,
-                    moment: moment$$1,
-                    range: true,
-                    rangeAt: 'start',
-                    onChange: this.handleChange
-                  }))
-                ),
-                React__default.createElement(
-                  'td',
-                  null,
-                  React__default.createElement(Picker, _extends({
-                    label: toLabel
-                  }, props, {
-                    isOpen: isOpen,
-                    className: 'range-end-picker',
-                    showTimePicker: showTimePicker,
-                    moment: moment$$1,
-                    range: true,
-                    rangeAt: 'end',
-                    onChange: this.handleChange
-                  }))
-                )
-              )
-            )
+            'div',
+            { className: 'datetime-range-picker-item' },
+            React__default.createElement(Picker, _extends({
+              shortcuts: shortcuts,
+              label: fromLabel || startDateText
+            }, props, {
+              isOpen: isOpen,
+              className: 'range-start-picker',
+              showTimePicker: showTimePicker,
+              moment: moment$$1,
+              range: true,
+              rangeAt: 'start',
+              onChange: this.handleChange,
+              format: formatStyle,
+              minPanel: 'day'
+            }))
+          ),
+          React__default.createElement(
+            'div',
+            { className: 'datetime-range-picker-item' },
+            React__default.createElement(Picker, _extends({
+              shortcuts: shortcuts,
+              label: toLabel || endDateText
+            }, props, {
+              isOpen: isOpen,
+              className: 'range-end-picker',
+              showTimePicker: showTimePicker,
+              moment: moment$$1,
+              range: true,
+              rangeAt: 'end',
+              onChange: this.handleChange,
+              format: formatStyle,
+              minPanel: 'day'
+            }))
           )
         )
       );
