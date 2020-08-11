@@ -33,7 +33,7 @@ class Shortcuts extends Component {
     const isCustomSelected = range
       ? !Object.keys(shortcuts).some((_key) => isSameRange(current, shortcuts[_key])) && key === 'custom'
       : false;
-    const className = classNames('btn', {
+    const className = classNames('lnk', {
       selected: selected || isCustomSelected
     });
 
@@ -60,7 +60,7 @@ class Shortcuts extends Component {
       } 
       : shortcuts;
 
-    return (<div className="shortcuts-bar-btns">
+    return (<div className="shortcuts-bar-lnks">
       {
         Object.keys(renderShortcuts).map((key) => {
           return this._renderShortcut(key, renderShortcuts[key]);

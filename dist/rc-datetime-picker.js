@@ -1049,7 +1049,7 @@ var Shortcuts = function (_Component) {
       var isCustomSelected = range ? !Object.keys(shortcuts).some(function (_key) {
         return isSameRange(current, shortcuts[_key]);
       }) && key === 'custom' : false;
-      var className = classNames('btn', {
+      var className = classNames('lnk', {
         selected: selected || isCustomSelected
       });
 
@@ -1077,7 +1077,7 @@ var Shortcuts = function (_Component) {
 
       return React__default.createElement(
         'div',
-        { className: 'shortcuts-bar-btns' },
+        { className: 'shortcuts-bar-lnks' },
         Object.keys(renderShortcuts).map(function (key) {
           return _this._renderShortcut(key, renderShortcuts[key]);
         })

@@ -220,10 +220,10 @@
   float: left;
   color: #aeaeae;
 }
-.datetime-picker .shortcuts-bar .shortcuts-bar-btns {
+.datetime-picker .shortcuts-bar .shortcuts-bar-lnks {
   float: right;
 }
-.datetime-picker .shortcuts-bar .shortcuts-bar-btns .btn {
+.datetime-picker .shortcuts-bar .shortcuts-bar-lnks .lnk {
   font-size: 90%;
   border: 0;
   background: none;
@@ -233,10 +233,10 @@
   outline: none;
   color: #025fb9;
 }
-.datetime-picker .shortcuts-bar .shortcuts-bar-btns .btn:hover {
+.datetime-picker .shortcuts-bar .shortcuts-bar-lnks .lnk:hover {
   color: inherit;
 }
-.datetime-picker .shortcuts-bar .shortcuts-bar-btns .btn:not(:first-child) {
+.datetime-picker .shortcuts-bar .shortcuts-bar-lnks .lnk:not(:first-child) {
   margin-left: 5px;
 }
 .datetime-picker .shortcuts-bar:after {
