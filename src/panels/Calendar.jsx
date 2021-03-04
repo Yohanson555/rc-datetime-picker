@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-// import moment from 'moment';
-const moment = require('moment');
-
+import moment from 'moment';
 import Day from './Day.jsx';
 import Month from './Month.jsx';
 import Year from './Year.jsx';

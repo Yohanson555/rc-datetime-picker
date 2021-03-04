@@ -46,7 +46,7 @@ class Day extends Component {
 
   _renderWeek = (week) => {
     return (
-      <th key={week}>{week}</th>
+      <th key={week}>{moment().day(week).format('dd')}</th>
     );
   }
 
