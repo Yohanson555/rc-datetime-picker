@@ -112,7 +112,7 @@ class Month extends Component {
         key={month} 
         className={className} 
         onClick={this.select.bind(this, month, isDisabled)}>
-        {currentMonth.format('MM')}
+        {currentMonth.format('MMM').toUpperCase()}
       </td>
     );
   }

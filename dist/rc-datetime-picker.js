@@ -1,5 +1,5 @@
 /*
- * rc-datetime-picker v1.8.4
+ * rc-datetime-picker v1.8.5
  * https://github.com/AllenWooooo/rc-datetime-picker
  *
  * (c) 2021 Allen Wu
@@ -436,7 +436,7 @@ var Month = function (_Component) {
           key: month,
           className: className,
           onClick: _this.select.bind(_this, month, isDisabled) },
-        currentMonth.format('MM')
+        currentMonth.format('MMM').toUpperCase()
       );
     };
 
