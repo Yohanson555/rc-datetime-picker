@@ -1,8 +1,8 @@
 /*
- * rc-datetime-picker v1.8.1
+ * rc-datetime-picker v1.8.4
  * https://github.com/AllenWooooo/rc-datetime-picker
  *
- * (c) 2020 Allen Wu
+ * (c) 2021 Allen Wu
  * License: MIT
  */
 (function (global, factory) {
@@ -19,8 +19,10 @@ ReactSlider = ReactSlider && ReactSlider.hasOwnProperty('default') ? ReactSlider
 InputNumber = InputNumber && InputNumber.hasOwnProperty('default') ? InputNumber['default'] : InputNumber;
 var ReactDOM__default = 'default' in ReactDOM ? ReactDOM['default'] : ReactDOM;
 
-var WEEKS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+//export const WEEKS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+//export const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+var WEEKS = [0, 1, 2, 3, 4, 5, 6];
+var MONTHS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 var DAY_FORMAT = 'MMMM, YYYY';
 
 var START_DATE_TEXT = 'Start Date:';
@@ -170,7 +172,7 @@ var Day = function (_Component) {
       return React__default.createElement(
         'th',
         { key: week },
-        week
+        moment().day(week).format('dd')
       );
     };
 
@@ -366,19 +368,19 @@ var Month = function (_Component) {
       onSelect(_moment);
     };
 
-    _this._renderMonth = function (row, month, idx) {
+    _this._renderMonth = function (row, month) {
       var now = moment();
       var _moment = _this.state.moment;
       var _this$props = _this.props,
           maxDate = _this$props.maxDate,
           minDate = _this$props.minDate,
-          months = _this$props.months,
           selected = _this$props.selected,
           range$$1 = _this$props.range,
           rangeAt = _this$props.rangeAt,
           dateLimit = _this$props.dateLimit;
 
       var currentMonth = _moment.clone().month(month);
+
       var start = selected && range$$1 ? selected.start ? currentMonth.isSame(selected.start, 'month') : false : false;
       var end = selected && range$$1 ? selected.end ? currentMonth.isSame(selected.end, 'month') : false : false;
       var between = selected && range$$1 ? selected.start && selected.end ? currentMonth.isBetween(selected.start, selected.end, 'month') : false : false;
@@ -434,7 +436,7 @@ var Month = function (_Component) {
           key: month,
           className: className,
           onClick: _this.select.bind(_this, month, isDisabled) },
-        months ? months[idx + row * 3] : month
+        currentMonth.format('MM')
       );
     };
 
@@ -458,6 +460,7 @@ var Month = function (_Component) {
 
       var _moment = this.state.moment;
       var months = MONTHS;
+
       var _props = this.props,
           changePanel = _props.changePanel,
           style = _props.style;
@@ -676,9 +679,6 @@ var Year = function (_Component) {
   return Year;
 }(React.Component);
 
-// import moment from 'moment';
-var moment$1 = require('moment');
-
 var Calendar = function (_Component) {
   inherits(Calendar, _Component);
 
@@ -769,7 +769,7 @@ var _initialiseProps = function _initialiseProps() {
     var range = props.range,
         rangeAt = props.rangeAt;
 
-    var now = _this2.state ? _this2.state.moment || moment$1() : moment$1();
+    var now = _this2.state ? _this2.state.moment || moment() : moment();
     var result = props.moment;
 
     if (result) {
